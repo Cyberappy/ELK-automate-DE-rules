@@ -1,13 +1,13 @@
-name: Push all the Rules to ELK
+name: All Detections To Elastic
 
 on:
   workflow_dispatch:
 
 jobs:
-  push-all-rules:
+  elastic-detections-all:
     runs-on: ubuntu-latest
     env:
-      ELASTIC_KEY: $${{ secrets.ELASTIC_KEY }}
+      ELASTIC_KEY: ${{ secrets.ELASTIC_KEY }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
