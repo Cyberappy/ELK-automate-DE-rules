@@ -12,7 +12,7 @@ headers = {
 
 data = ""
 
-for root, dirs, files in os.walk("/root/BlackPerl-Rules/rules"):
+for root, dirs, files in os.walk("rules/"):
     for file in files:
         data = "{\n"
         if file.endswith(".toml"):
