@@ -1,0 +1,61 @@
+[metadata]
+creation_date = "2021/10/19"
+
+[rule]
+author = ["Urvesh Thakkar"]
+description = "Detects PowerShell scripts that can record audio, a common feature in popular post-exploitation tooling."
+name = "PowerShell Suspicious Script with Audio Capture Capabilities" #ChangeME for changing the rule name
+severity = "medium"
+type = "query" #Defining Rule Type - Change this if you want to create other type of rules
+risk_score = 47
+rule_id = "2f2f4939-0b34-40c2-a0a3-844eb7889f43"
+#The below is the actual detection query. 
+query = '''
+event.category:process and host.os.type:windows and
+  powershell.file.script_block_text : (
+    "Get-MicrophoneAudio" or
+    "WindowsAudioDevice-Powershell-Cmdlet" or
+    (waveInGetNumDevs and mciSendStringA)
+  )
+  and not powershell.file.script_block_text : (
+    "sentinelbreakpoints" and "Set-PSBreakpoint" and "PowerSploitIndicators"
+  )
+  and not user.id : "S-1-5-18"
+'''
+
+#Additional Paramater - For ATT&CK Mappings. Change it basis the rules -- 
+[[rule.threat]]
+framework = "MITRE ATT&CK"
+[[rule.threat.technique]]
+id = "T1123"
+name = "Audio Capture"
+reference = "https://attack.mitre.org/techniques/T1123/"
+
+
+[rule.threat.tactic]
+id = "TA0009"
+name = "Collection"
+reference = "https://attack.mitre.org/tactics/TA0009/"
+[[rule.threat]]
+framework = "MITRE ATT&CK"
+[[rule.threat.technique]]
+id = "T1059"
+name = "Command and Scripting Interpreter"
+reference = "https://attack.mitre.org/techniques/T1059/"
+[[rule.threat.technique.subtechnique]]
+id = "T1059.001"
+name = "PowerShell"
+reference = "https://attack.mitre.org/techniques/T1059/001/"
+
+
+[[rule.threat.technique]]
+id = "T1106"
+name = "Native API"
+reference = "https://attack.mitre.org/techniques/T1106/"
+
+
+[rule.threat.tactic]
+id = "TA0002"
+name = "Execution"
+reference = "https://attack.mitre.org/tactics/TA0002/"
+
