@@ -3,7 +3,7 @@ import os
 import tomllib
 
 url = "http://143.198.148.187:5601/api/detection_engine/rules"
-api_key = os.environ['ELASTIC_KEY']
+api_key = "QlNLdnRvNEJyaWsyWXRVdHprTEs6VzFYYWdldnZROGU3OHZXQWRSREk1QQ=="
 headers = {
     'Content-Type': 'application/json;charset=UTF-8',
     'kbn-xsrf': 'true',
